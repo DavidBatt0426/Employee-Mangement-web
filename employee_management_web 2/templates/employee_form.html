@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-card wide">
+  <h1>{{ action }} Employee</h1>
+  <form method="post" class="grid-form">
+    <label>Name<input name="name" value="{{ employee.name if employee else '' }}" required></label>
+    <label>Hire Date<input name="hire_date" type="date" value="{{ employee.hire_date if employee else '' }}" required></label>
+    <label>Termination Date<input name="termination_date" type="date" value="{{ employee.termination_date if employee else '' }}"></label>
+    <label>Status<select name="status" required>{% for s in ['Active','Inactive','Hold'] %}<option value="{{ s }}" {% if employee and employee.status == s %}selected{% endif %}>{{ s }}</option>{% endfor %}</select></label>
+    <label>Pay Rate<input name="pay_rate" type="number" step="0.01" min="0" value="{{ employee.pay_rate if employee else '' }}" required></label>
+    <label>Title<input name="title" value="{{ employee.title if employee else '' }}" required></label>
+    <label>Department<input name="department" value="{{ employee.department if employee else '' }}" required></label>
+    <div class="full-row"><button type="submit">{{ action }} Employee</button><a class="button light" href="{{ url_for('employees') }}">Cancel</a></div>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="login-card">
+  <h1>Employee Management System</h1>
+  <p>Login to access employee and user records.</p>
+  <form method="post" class="form">
+    <label>Username</label>
+    <input name="username" required autofocus>
+    <label>Password</label>
+    <input name="password" type="password" required>
+    <button type="submit">Login</button>
+  </form>
+  <div class="demo">
+    <strong>Demo Logins</strong><br>
+    Full access: admin / admin123<br>
+    Only view: viewer / viewer123
+  </div>
+</div>
+{% endblock %}

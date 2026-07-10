@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="form-card">
+  <h1>{{ action }} User</h1>
+  <form method="post" class="form">
+    <label>Username</label>
+    <input name="username" value="{{ user.username if user else '' }}" required>
+    <label>Password {% if action == 'Edit' %}<span class="muted">(leave blank to keep current)</span>{% endif %}</label>
+    <input name="password" type="password" {% if action == 'Add' %}required{% endif %}>
+    <label>Title</label>
+    <input name="title" value="{{ user.title if user else '' }}" required>
+    <label>Access Level</label>
+    <select name="access_level" required>
+      {% for level in ['Full','Only View'] %}<option value="{{ level }}" {% if user and user.access_level == level %}selected{% endif %}>{{ level }}</option>{% endfor %}
+    </select>
+    <button type="submit">{{ action }} User</button>
+    <a class="button light" href="{{ url_for('users') }}">Cancel</a>
+  </form>
+</div>
+{% endblock %}

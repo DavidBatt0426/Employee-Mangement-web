@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header row">
+  <div><h1>User Control Table</h1><p>Manage usernames, titles, and access levels.</p></div>
+  <a class="button" href="{{ url_for('add_user') }}">Add User</a>
+</div>
+<table>
+  <thead><tr><th>Username</th><th>Title</th><th>Access Level</th><th>Actions</th></tr></thead>
+  <tbody>
+    {% for u in users %}
+    <tr>
+      <td>{{ u.username }}</td><td>{{ u.title }}</td><td><span class="pill small">{{ u.access_level }}</span></td>
+      <td class="action-cell"><a href="{{ url_for('edit_user', user_id=u.id) }}">Edit</a><form method="post" action="{{ url_for('delete_user', user_id=u.id) }}" onsubmit="return confirm('Delete this user?')"><button class="link danger">Delete</button></form></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

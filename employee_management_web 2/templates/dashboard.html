@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="header">
+  <h1>Dashboard</h1>
+  <p>Welcome, {{ current_user.get('username') }}.</p>
+</div>
+<div class="cards">
+  <div class="card"><h2>{{ employee_count }}</h2><p>Employees</p></div>
+  <div class="card"><h2>{{ user_count }}</h2><p>Users</p></div>
+  <div class="card"><h2>{{ current_user.get('access_level') }}</h2><p>Your Access Level</p></div>
+</div>
+<div class="actions">
+  <a class="button" href="{{ url_for('employees') }}">Open Employee Records</a>
+  {% if current_user.get('access_level') == 'Full' %}
+  <a class="button secondary" href="{{ url_for('users') }}">Open User Control</a>
+  {% endif %}
+</div>
+{% endblock %}
