@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Employees{% endblock %}{% block content %}
+<div class="head"><div><h1>Employees</h1><p>Employee records and employment details</p></div>
+{% if session.access_level=='Full' %}<a class="button primary" href="{{url_for('add_employee')}}">+ Add Employee</a>{% endif %}</div>
+<section class="card table"><table><thead><tr><th>Name</th><th>Hire Date</th><th>Termination</th><th>Status</th><th>Pay Rate</th><th>Title</th><th>Department</th>
+{% if session.access_level=='Full' %}<th>Actions</th>{% endif %}</tr></thead><tbody>
+{% for e in employees %}<tr><td>{{e.name}}</td><td>{{e.hire_date}}</td><td>{{e.termination_date or '—'}}</td><td>{{e.status}}</td>
+<td>${{"%.2f"|format(e.pay_rate)}}</td><td>{{e.title}}</td><td>{{e.department}}</td>
+{% if session.access_level=='Full' %}<td class="actions"><a class="button small" href="{{url_for('edit_employee',i=e.id)}}">Edit</a>
+<form method="post" action="{{url_for('delete_employee',i=e.id)}}" onsubmit="return confirm('Delete this employee?')">
+<button class="danger small">Delete</button></form></td>{% endif %}</tr>{% endfor %}</tbody></table></section>{% endblock %}

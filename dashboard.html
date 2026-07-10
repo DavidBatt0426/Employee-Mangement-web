@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% block content %}<div class="head"><div><h1>Dashboard</h1>
+<p>Welcome, {{session.username}} — {{session.access_level}}</p></div></div>
+<div class="stats"><div><b>{{employee_count}}</b><span>Total Employees</span></div>
+<div><b>{{active_count}}</b><span>Active Employees</span></div><div><b>{{user_count}}</b><span>System Users</span></div></div>
+<section class="card"><h2>Quick Actions</h2><a class="button primary" href="{{url_for('employees')}}">View Employees</a>
+{% if session.access_level=='Full' %}<a class="button" href="{{url_for('add_employee')}}">Add Employee</a>
+<a class="button" href="{{url_for('users')}}">Manage Users</a>{% endif %}</section>{% endblock %}

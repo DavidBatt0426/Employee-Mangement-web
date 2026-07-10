@@ -1,0 +1,14 @@
+:root{--nav:#14344f;--blue:#2167a8;--bg:#f4f7fb;--border:#d7e0e9;--text:#172433}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{background:var(--nav);color:white;padding:16px 28px;display:flex;justify-content:space-between;align-items:center}
+nav{display:flex;gap:18px}header a{color:white;text-decoration:none}main{max-width:1180px;margin:30px auto;padding:0 20px}
+.card{background:white;border:1px solid var(--border);border-radius:12px;padding:22px;box-shadow:0 4px 16px #0000000d}
+.login{min-height:82vh;display:grid;place-items:center}.login .card{width:min(430px,100%)}.demo{margin-top:16px;background:#eef5fb;padding:12px;border-radius:8px;line-height:1.7}
+.form{display:grid;gap:16px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.form label{display:grid;gap:7px;font-weight:bold}.form input,.form select{padding:11px;border:1px solid var(--border);border-radius:8px;font:inherit}
+button,.button{border:1px solid var(--border);background:white;color:var(--text);padding:10px 14px;border-radius:8px;text-decoration:none;cursor:pointer;font:inherit;display:inline-block}
+.primary{background:var(--blue);color:white;border-color:var(--blue)}.danger{background:#b42318;color:white;border-color:#b42318}.small{padding:7px 10px;font-size:13px}
+.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.head h1{margin:0}.head p{color:#667085;margin:6px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px}.stats div{background:white;border:1px solid var(--border);border-radius:12px;padding:22px}.stats b{font-size:34px;display:block}.stats span{color:#667085}
+.table{padding:0;overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:14px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}th{background:#edf3f8}.actions{display:flex;gap:7px}.actions form{margin:0}
+.flash{padding:12px;margin-bottom:15px;border-radius:8px}.success{background:#e8f7ee;color:#176b37}.error{background:#fdecec;color:#9b1c1c}
+@media(max-width:760px){.two,.stats{grid-template-columns:1fr}header,.head{align-items:flex-start;flex-direction:column;gap:12px}nav{flex-wrap:wrap}}

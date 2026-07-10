@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block content %}<div class="head"><h1>{{heading}}</h1></div><section class="card">
+<form method="post" class="form two"><label>Name<input name="name" value="{{employee.name if employee else ''}}" required></label>
+<label>Hire Date<input type="date" name="hire_date" value="{{employee.hire_date if employee else ''}}" required></label>
+<label>Termination Date<input type="date" name="termination_date" value="{{employee.termination_date if employee else ''}}"></label>
+<label>Status<select name="status">{% for s in ['Active','Inactive','Hold'] %}<option {% if employee and employee.status==s %}selected{% endif %}>{{s}}</option>{% endfor %}</select></label>
+<label>Pay Rate<input type="number" step=".01" min="0" name="pay_rate" value="{{employee.pay_rate if employee else ''}}" required></label>
+<label>Title<input name="title" value="{{employee.title if employee else ''}}" required></label>
+<label>Department<input name="department" value="{{employee.department if employee else ''}}" required></label>
+<div><button class="primary">Save Employee</button> <a class="button" href="{{url_for('employees')}}">Cancel</a></div></form></section>{% endblock %}
