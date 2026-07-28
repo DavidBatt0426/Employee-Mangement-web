@@ -1,12 +1,12 @@
-# Employee Management Web App
+# Employee Management App — PostgreSQL Version
 
-Demo logins:
+This version stores users and employees in PostgreSQL so records remain after the web service restarts.
+
+Demo accounts:
 - admin / admin123
 - viewer / viewer123
 
-Render settings:
-- Root Directory: blank
-- Build Command: pip install -r requirements.txt
-- Start Command: gunicorn app:app
-
-Note: SQLite data may reset on Render free services after a restart or redeploy.
+Render web service:
+- Build Command: `pip install -r requirements.txt`
+- Start Command: `gunicorn app:app`
+- Environment variable: `DATABASE_URL` should use the Render Postgres internal database URL.
