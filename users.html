@@ -1,6 +1,50 @@
-{% extends "base.html" %}{% block content %}<div class="head"><div><h1>User Control</h1><p>Manage login accounts and access levels</p></div>
-<a class="button primary" href="{{url_for('add_user')}}">+ Add User</a></div><section class="card table"><table>
-<thead><tr><th>Username</th><th>Title</th><th>Access Level</th><th>Actions</th></tr></thead><tbody>
-{% for u in users %}<tr><td>{{u.username}}</td><td>{{u.title}}</td><td>{{u.access_level}}</td><td class="actions">
-<a class="button small" href="{{url_for('edit_user',i=u.id)}}">Edit</a><form method="post" action="{{url_for('delete_user',i=u.id)}}" onsubmit="return confirm('Delete this user?')">
-<button class="danger small">Delete</button></form></td></tr>{% endfor %}</tbody></table></section>{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="head">
+  <div>
+    <h1>User Control</h1>
+    <p>Manage accounts, emails, and access levels</p>
+  </div>
+  <a class="button primary" href="{{ url_for('add_user') }}">+ Add User</a>
+</div>
+
+<section class="card table">
+  <table>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Title</th>
+        <th>Access Level</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email or 'Not entered' }}</td>
+          <td>{{ user.title }}</td>
+          <td>{{ user.access_level }}</td>
+          <td>{{ 'Active' if user.is_active else 'Setup Pending' }}</td>
+          <td class="actions">
+            <a class="button small" href="{{ url_for('edit_user', i=user.id) }}">Edit</a>
+
+            {% if not user.is_active %}
+              <form method="post" action="{{ url_for('resend_setup', i=user.id) }}">
+                <button class="small">Resend Setup</button>
+              </form>
+            {% endif %}
+
+            <form method="post" action="{{ url_for('delete_user', i=user.id) }}"
+                  onsubmit="return confirm('Delete this user?')">
+              <button class="danger small">Delete</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

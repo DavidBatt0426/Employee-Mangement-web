@@ -15,3 +15,9 @@ services:
         fromDatabase:
           name: employee-management-db
           property: connectionString
+      - key: APP_URL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: FROM_EMAIL
+        sync: false

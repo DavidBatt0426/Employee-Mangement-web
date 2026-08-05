@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Set Up Account{% endblock %}
+{% block content %}
+<div class="login">
+  <section class="card setup-card">
+    <h1>Set Up Your Account</h1>
+    <p>Hello {{ user.username }}. Create your password and three recovery questions.</p>
+
+    <form method="post" class="form">
+      <label>
+        New Password
+        <input type="password" name="password" minlength="8" required>
+      </label>
+
+      <label>
+        Confirm Password
+        <input type="password" name="confirm_password" minlength="8" required>
+      </label>
+
+      {% for number in [1, 2, 3] %}
+        <label>
+          Security Question {{ number }}
+          <select name="security_question_{{ number }}" required>
+            {% for question in security_questions %}
+              <option value="{{ question }}">{{ question }}</option>
+            {% endfor %}
+          </select>
+        </label>
+
+        <label>
+          Answer {{ number }}
+          <input type="password" name="security_answer_{{ number }}" required>
+        </label>
+      {% endfor %}
+
+      <button class="primary">Finish Account Setup</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

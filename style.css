@@ -12,3 +12,7 @@ button,.button{border:1px solid var(--border);background:white;color:var(--text)
 .table{padding:0;overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:14px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}th{background:#edf3f8}.actions{display:flex;gap:7px}.actions form{margin:0}
 .flash{padding:12px;margin-bottom:15px;border-radius:8px}.success{background:#e8f7ee;color:#176b37}.error{background:#fdecec;color:#9b1c1c}
 @media(max-width:760px){.two,.stats{grid-template-columns:1fr}header,.head{align-items:flex-start;flex-direction:column;gap:12px}nav{flex-wrap:wrap}}
+
+.forgot-link{text-align:center;margin:16px 0 0}.forgot-link a{color:#2167a8;text-decoration:none;font-weight:600}
+
+.setup-card{width:min(620px,100%)}

@@ -1,6 +1,37 @@
-{% extends "base.html" %}{% block content %}<div class="head"><h1>{{heading}}</h1></div><section class="card"><form method="post" class="form two">
-<label>Username<input name="username" value="{{user.username if user else ''}}" required></label>
-<label>Password<input type="password" name="password" {% if not user %}required{% endif %}><small>{% if user %}Leave blank to keep current password.{% endif %}</small></label>
-<label>Title<input name="title" value="{{user.title if user else ''}}" required></label>
-<label>Access Level<select name="access_level">{% for x in ['Full','Only View'] %}<option {% if user and user.access_level==x %}selected{% endif %}>{{x}}</option>{% endfor %}</select></label>
-<div><button class="primary">Save User</button> <a class="button" href="{{url_for('users')}}">Cancel</a></div></form></section>{% endblock %}
+{% extends "base.html" %}
+{% block content %}
+<div class="head"><h1>{{ heading }}</h1></div>
+
+<section class="card">
+  <form method="post" class="form two">
+    <label>
+      Username
+      <input name="username" value="{{ user.username if user else '' }}" required>
+    </label>
+
+    <label>
+      Email
+      <input type="email" name="email" value="{{ user.email if user and user.email else '' }}" required>
+    </label>
+
+    <label>
+      Title
+      <input name="title" value="{{ user.title if user else '' }}" required>
+    </label>
+
+    <label>
+      Access Level
+      <select name="access_level" required>
+        {% for level in ['Full', 'Only View'] %}
+          <option {% if user and user.access_level == level %}selected{% endif %}>{{ level }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <div>
+      <button class="primary">Save User</button>
+      <a class="button" href="{{ url_for('users') }}">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}
