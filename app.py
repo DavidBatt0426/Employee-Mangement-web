@@ -3,7 +3,6 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from functools import wraps
 
-import resend
 from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import inspect, text
@@ -212,40 +211,6 @@ def make_setup_link(user):
         _external=True,
         _scheme="https",
     )
-
-
-def send_setup_email(user, setup_link):
-    api_key = os.environ.get("RESEND_API_KEY", "").strip()
-    from_email = os.environ.get("FROM_EMAIL", "").strip()
-
-    if not api_key or not from_email:
-        return False, "Email is not configured."
-
-    resend.api_key = api_key
-    try:
-        resend.Emails.send(
-            {
-                "from": from_email,
-                "to": [user.email],
-                "subject": "Set up your Employee Management account",
-                "html": f"""
-                    <h2>Your account is ready to set up</h2>
-                    <p>Hello {user.username},</p>
-                    <p>Use the button below to create your password and security questions.</p>
-                    <p>
-                      <a href="{setup_link}"
-                         style="background:#2167a8;color:white;padding:12px 18px;
-                                text-decoration:none;border-radius:6px;display:inline-block;">
-                         Set up my account
-                      </a>
-                    </p>
-                    <p>This link expires in {SETUP_LINK_HOURS} hours.</p>
-                """,
-            }
-        )
-        return True, None
-    except Exception as error:
-        return False, str(error)
 
 
 def token_is_valid(user, raw_token):
@@ -582,17 +547,9 @@ def add_user():
             return render_template("user_form.html", user=None, heading="Add User")
 
         setup_link = make_setup_link(user)
-        sent, error = send_setup_email(user, setup_link)
-
-        if sent:
-            flash(f"User created. A setup email was sent to {user.email}.", "success")
-        else:
-            flash(
-                "User created, but the setup email could not be sent. "
-                f"Use this setup link for testing: {setup_link}",
-                "error",
-            )
-
+        session["new_user_setup_link"] = setup_link
+        session["new_user_setup_email"] = user.email
+        flash("User created successfully. Copy the setup link below and send it to the user.", "success")
         return redirect(url_for("users"))
 
     return render_template("user_form.html", user=None, heading="Add User")
@@ -632,17 +589,9 @@ def resend_setup(i):
         return redirect(url_for("users"))
 
     setup_link = make_setup_link(user)
-    sent, error = send_setup_email(user, setup_link)
-
-    if sent:
-        flash(f"A new setup email was sent to {user.email}.", "success")
-    else:
-        flash(
-            "The email could not be sent. "
-            f"Use this setup link for testing: {setup_link}",
-            "error",
-        )
-
+    session["new_user_setup_link"] = setup_link
+    session["new_user_setup_email"] = user.email
+    flash("A new setup link was created. Copy it below and send it to the user.", "success")
     return redirect(url_for("users"))
 
 
