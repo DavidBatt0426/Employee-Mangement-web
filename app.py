@@ -571,7 +571,7 @@ def add_user():
         except IntegrityError:
             db.session.rollback()
             flash("That username or email already exists.", "error")
-            return render_template("user_form.html", user=None, heading="Add User")
+            return render_template("user_form.html", user=None, heading="Add User", job_titles=JobTitle.query.order_by(JobTitle.name).all())
 
         setup_link = make_setup_link(user)
         session["new_user_setup_link"] = setup_link
@@ -579,7 +579,7 @@ def add_user():
         flash("User created successfully. Copy the setup link below and send it to the user.", "success")
         return redirect(url_for("users"))
 
-    return render_template("user_form.html", user=None, heading="Add User")
+    return render_template("user_form.html", user=None, heading="Add User", job_titles=JobTitle.query.order_by(JobTitle.name).all())
 
 
 @app.route("/users/<int:i>/edit", methods=["GET", "POST"])
@@ -602,7 +602,7 @@ def edit_user(i):
             db.session.rollback()
             flash("That username or email already exists.", "error")
 
-    return render_template("user_form.html", user=user, heading="Edit User")
+    return render_template("user_form.html", user=user, heading="Edit User", job_titles=JobTitle.query.order_by(JobTitle.name).all())
 
 
 @app.post("/users/<int:i>/resend-setup")

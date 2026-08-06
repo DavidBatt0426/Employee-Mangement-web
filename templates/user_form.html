@@ -16,7 +16,11 @@
 
     <label>
       Title
-      <input name="title" value="{{ user.title if user else '' }}" required>
+      <select name="title" required>
+        {% for title in job_titles %}
+          <option value="{{ title.name }}" {% if user and user.title == title.name %}selected{% endif %}>{{ title.name }}</option>
+        {% endfor %}
+      </select>
     </label>
 
     <label>
