@@ -1,23 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Login{% endblock %}
 {% block content %}
-<div class="login">
-  <section class="card">
-    <h1>Employee Management System</h1>
-    <p>Sign in with your username or email.</p>
+<div class="login-shell">
+  <section class="login-panel">
+    <div class="login-brand">
+      <span class="brand-mark large">EM</span>
+      <div>
+        <span class="eyebrow">Secure access</span>
+        <h1>Employee Manager</h1>
+        <p>Sign in to manage employee and user records.</p>
+      </div>
+    </div>
 
     <form method="post" class="form">
       <label>
         Username or Email
-        <input name="identifier" required>
+        <input name="identifier" placeholder="Enter username or email" required autofocus>
       </label>
 
       <label>
         Password
-        <input name="password" type="password" required>
+        <input name="password" type="password" placeholder="Enter password" required>
       </label>
 
-      <button class="primary">Login</button>
+      <button class="primary full-width">Sign In</button>
     </form>
 
     <p class="forgot-link">
@@ -25,10 +31,16 @@
     </p>
 
     <div class="demo">
-      <b>Existing demo accounts</b><br>
-      admin / admin123<br>
-      viewer / viewer123
+      <strong>Demo accounts</strong>
+      <span>Admin: admin / admin123</span>
+      <span>Viewer: viewer / viewer123</span>
     </div>
   </section>
+
+  <aside class="login-aside">
+    <span class="eyebrow light">Simple. Secure. Organized.</span>
+    <h2>One place to manage your workforce.</h2>
+    <p>Add employees, manage access, and keep company records organized from any device.</p>
+  </aside>
 </div>
 {% endblock %}

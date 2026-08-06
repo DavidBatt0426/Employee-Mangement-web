@@ -1,7 +1,55 @@
-{% extends "base.html" %}{% block content %}<div class="head"><div><h1>Dashboard</h1>
-<p>Welcome, {{session.username}} — {{session.access_level}}</p></div></div>
-<div class="stats"><div><b>{{employee_count}}</b><span>Total Employees</span></div>
-<div><b>{{active_count}}</b><span>Active Employees</span></div><div><b>{{user_count}}</b><span>System Users</span></div></div>
-<section class="card"><h2>Quick Actions</h2><a class="button primary" href="{{url_for('employees')}}">View Employees</a>
-{% if session.access_level=='Full' %}<a class="button" href="{{url_for('add_employee')}}">Add Employee</a>
-<a class="button" href="{{url_for('users')}}">Manage Users</a>{% endif %}</section>{% endblock %}
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div>
+    <span class="eyebrow">Overview</span>
+    <h1>Welcome back, {{ session.username }}</h1>
+    <p>You are signed in with <strong>{{ session.access_level }}</strong> access.</p>
+  </div>
+  <div class="hero-badge">Workforce Dashboard</div>
+</section>
+
+<section class="stats">
+  <article class="stat-card">
+    <div class="stat-icon">👥</div>
+    <div>
+      <b>{{ employee_count }}</b>
+      <span>Total Employees</span>
+    </div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-icon">✓</div>
+    <div>
+      <b>{{ active_count }}</b>
+      <span>Active Employees</span>
+    </div>
+  </article>
+
+  <article class="stat-card">
+    <div class="stat-icon">🔐</div>
+    <div>
+      <b>{{ user_count }}</b>
+      <span>System Users</span>
+    </div>
+  </article>
+</section>
+
+<section class="card quick-card">
+  <div>
+    <span class="eyebrow">Quick actions</span>
+    <h2>What would you like to do?</h2>
+    <p>Manage employee records, user accounts, and dropdown settings.</p>
+  </div>
+
+  <div class="quick-actions">
+    <a class="button primary" href="{{ url_for('employees') }}">View Employees</a>
+    {% if session.access_level == 'Full' %}
+      <a class="button" href="{{ url_for('add_employee') }}">Add Employee</a>
+      <a class="button" href="{{ url_for('users') }}">Manage Users</a>
+      <a class="button" href="{{ url_for('list_settings') }}">Edit Dropdowns</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

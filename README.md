@@ -16,6 +16,6 @@ After an administrator creates a user, the User Control screen shows a one-time 
 Full-access admins can open Settings to add or remove departments and job titles. The Employee form uses those lists automatically.
 
 
-## User title dropdown fix
+## Visual refresh
 
-The Add User and Edit User forms now use the same job-title list managed from Settings.
+This version includes a redesigned login page, modern dashboard cards, improved navigation, polished tables, responsive forms, and mobile-friendly styling.
