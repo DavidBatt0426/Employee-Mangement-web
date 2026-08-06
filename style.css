@@ -18,3 +18,11 @@ button,.button{border:1px solid var(--border);background:white;color:var(--text)
 .setup-card{width:min(620px,100%)}
 
 .setup-link-card{margin-bottom:20px}.copy-row{display:flex;gap:10px}.copy-row input{flex:1;padding:11px;border:1px solid var(--border);border-radius:8px}.muted-note{color:#667085}
+
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.inline-form{display:flex;gap:10px;margin-bottom:18px}
+.inline-form input{flex:1;padding:11px;border:1px solid var(--border);border-radius:8px;font:inherit}
+.managed-list{display:grid;gap:8px}
+.managed-row{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);padding:10px 0}
+.managed-row form{margin:0}
+@media(max-width:760px){.settings-grid{grid-template-columns:1fr}.inline-form{flex-direction:column}}

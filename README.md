@@ -10,3 +10,7 @@ Remove these if present:
 - FROM_EMAIL
 
 After an administrator creates a user, the User Control screen shows a one-time setup link with a Copy Link button.
+
+
+## Dynamic dropdowns
+Full-access admins can open Settings to add or remove departments and job titles. The Employee form uses those lists automatically.

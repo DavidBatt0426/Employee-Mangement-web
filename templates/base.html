@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head><body>
 {% if session.get('user_id') %}<header><strong>Employee Manager</strong><nav>
 <a href="{{ url_for('dashboard') }}">Dashboard</a><a href="{{ url_for('employees') }}">Employees</a>
-{% if session.get('access_level') == 'Full' %}<a href="{{ url_for('users') }}">Users</a>{% endif %}
+{% if session.get('access_level') == 'Full' %}<a href="{{ url_for('users') }}">Users</a><a href="{{ url_for('list_settings') }}">Settings</a>{% endif %}
 <a href="{{ url_for('logout') }}">Logout</a></nav></header>{% endif %}
 <main>{% with messages=get_flashed_messages(with_categories=true) %}{% for c,m in messages %}
 <div class="flash {{c}}">{{m}}</div>{% endfor %}{% endwith %}{% block content %}{% endblock %}</main></body></html>

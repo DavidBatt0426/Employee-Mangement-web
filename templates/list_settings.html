@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Dropdown Settings{% endblock %}
+{% block content %}
+<div class="head">
+  <div><h1>Dropdown Settings</h1><p>Manage departments and job titles.</p></div>
+</div>
+<div class="settings-grid">
+  <section class="card">
+    <h2>Departments</h2>
+    <form method="post" action="{{ url_for('add_department') }}" class="inline-form">
+      <input name="name" placeholder="New department" required>
+      <button class="primary">Add</button>
+    </form>
+    <div class="managed-list">
+      {% for department in departments %}
+      <div class="managed-row">
+        <span>{{ department.name }}</span>
+        <form method="post" action="{{ url_for('delete_department', i=department.id) }}" onsubmit="return confirm('Delete this department?')">
+          <button class="danger small">Delete</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Job Titles</h2>
+    <form method="post" action="{{ url_for('add_job_title') }}" class="inline-form">
+      <input name="name" placeholder="New job title" required>
+      <button class="primary">Add</button>
+    </form>
+    <div class="managed-list">
+      {% for job_title in job_titles %}
+      <div class="managed-row">
+        <span>{{ job_title.name }}</span>
+        <form method="post" action="{{ url_for('delete_job_title', i=job_title.id) }}" onsubmit="return confirm('Delete this job title?')">
+          <button class="danger small">Delete</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+</div>
+{% endblock %}

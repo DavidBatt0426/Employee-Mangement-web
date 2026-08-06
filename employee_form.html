@@ -38,7 +38,7 @@
       Job Title
       <select name="title" required>
         {% for title in job_titles %}
-          <option {% if employee and employee.title == title %}selected{% endif %}>{{ title }}</option>
+          <option value="{{ title.name }}" {% if employee and employee.title == title.name %}selected{% endif %}>{{ title.name }}</option>
         {% endfor %}
       </select>
     </label>
@@ -47,7 +47,7 @@
       Department
       <select name="department" required>
         {% for department in departments %}
-          <option {% if employee and employee.department == department %}selected{% endif %}>{{ department }}</option>
+          <option value="{{ department.name }}" {% if employee and employee.department == department.name %}selected{% endif %}>{{ department.name }}</option>
         {% endfor %}
       </select>
     </label>

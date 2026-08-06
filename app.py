@@ -89,6 +89,16 @@ class Employee(db.Model):
     department = db.Column(db.String(120), nullable=False)
 
 
+class Department(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+
+
+class JobTitle(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=True, nullable=False)
+
+
 def utc_now():
     return datetime.now(timezone.utc)
 
@@ -166,6 +176,23 @@ def initialize_database():
                 department="Operations",
             )
         )
+
+    if Department.query.count() == 0:
+        db.session.add_all([
+            Department(name=name) for name in [
+                "Administration", "Customer Service", "Finance",
+                "Human Resources", "Information Technology",
+                "Marketing", "Operations", "Sales"
+            ]
+        ])
+
+    if JobTitle.query.count() == 0:
+        db.session.add_all([
+            JobTitle(name=name) for name in [
+                "Administrator", "Analyst", "Assistant", "Coordinator",
+                "Director", "Manager", "Specialist", "Supervisor", "Technician"
+            ]
+        ])
 
     db.session.commit()
 
@@ -473,8 +500,8 @@ def add_employee():
         "employee_form.html",
         employee=None,
         heading="Add Employee",
-        departments=DEPARTMENTS,
-        job_titles=JOB_TITLES,
+        departments=Department.query.order_by(Department.name).all(),
+        job_titles=JobTitle.query.order_by(JobTitle.name).all()
     )
 
 
@@ -500,8 +527,8 @@ def edit_employee(i):
         "employee_form.html",
         employee=employee,
         heading="Edit Employee",
-        departments=DEPARTMENTS,
-        job_titles=JOB_TITLES,
+        departments=Department.query.order_by(Department.name).all(),
+        job_titles=JobTitle.query.order_by(JobTitle.name).all()
     )
 
 
@@ -608,6 +635,83 @@ def delete_user(i):
     db.session.commit()
     flash("User deleted successfully.", "success")
     return redirect(url_for("users"))
+
+
+@app.route("/settings/lists")
+@login_required
+@full_access_required
+def list_settings():
+    return render_template(
+        "list_settings.html",
+        departments=Department.query.order_by(Department.name).all(),
+        job_titles=JobTitle.query.order_by(JobTitle.name).all(),
+    )
+
+
+@app.post("/settings/departments/add")
+@login_required
+@full_access_required
+def add_department():
+    name = request.form.get("name", "").strip()
+    if not name:
+        flash("Enter a department name.", "error")
+        return redirect(url_for("list_settings"))
+
+    db.session.add(Department(name=name))
+    try:
+        db.session.commit()
+        flash("Department added.", "success")
+    except IntegrityError:
+        db.session.rollback()
+        flash("That department already exists.", "error")
+    return redirect(url_for("list_settings"))
+
+
+@app.post("/settings/departments/<int:i>/delete")
+@login_required
+@full_access_required
+def delete_department(i):
+    department = db.get_or_404(Department, i)
+    if Employee.query.filter_by(department=department.name).first():
+        flash("That department is being used by an employee.", "error")
+    else:
+        db.session.delete(department)
+        db.session.commit()
+        flash("Department deleted.", "success")
+    return redirect(url_for("list_settings"))
+
+
+@app.post("/settings/job-titles/add")
+@login_required
+@full_access_required
+def add_job_title():
+    name = request.form.get("name", "").strip()
+    if not name:
+        flash("Enter a job title.", "error")
+        return redirect(url_for("list_settings"))
+
+    db.session.add(JobTitle(name=name))
+    try:
+        db.session.commit()
+        flash("Job title added.", "success")
+    except IntegrityError:
+        db.session.rollback()
+        flash("That job title already exists.", "error")
+    return redirect(url_for("list_settings"))
+
+
+@app.post("/settings/job-titles/<int:i>/delete")
+@login_required
+@full_access_required
+def delete_job_title(i):
+    job_title = db.get_or_404(JobTitle, i)
+    if Employee.query.filter_by(title=job_title.name).first():
+        flash("That job title is being used by an employee.", "error")
+    else:
+        db.session.delete(job_title)
+        db.session.commit()
+        flash("Job title deleted.", "success")
+    return redirect(url_for("list_settings"))
 
 
 @app.route("/health")
